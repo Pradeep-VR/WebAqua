@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Org.BouncyCastle.Asn1.X509;
+using System;
+using System.Activities.Expressions;
+using System.Activities.Statements;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -771,14 +774,14 @@ namespace AQUA
             }
             return dts;
         }
-        
-        public DataTable GetIQFscanedData(string strBatchno,string strLblSts)
+
+        public DataTable GetIQFscanedData(string strBatchno,string strLblSts,string strPrdType)
         {
             DataTable dts = new DataTable();
             try
             {
-                string Qry = "SELECT  DISTINCT BatchNumber, SoakingBarcode,SlabPacking,POnumber,Grade,Variety,NoofSlabCotton,PackingStyle,Actpackingstyle,WeightUnits FROM IQFBarcodePrinting " +
-                    "WHERE BatchNumber='" + strBatchno + "' and LabelStatus='" + strLblSts + "'";
+                string Qry = "SELECT DISTINCT BatchNumber,SoakingBarcode,SlabPacking,POnumber,Grade,Variety,NoofSlabCotton,FreezingType,Actpackingstyle,WeightUnits,LabelStatus FROM IQFBarcodePrinting " +
+                    "WHERE BatchNumber='" + strBatchno + "' and Variety = '" + strPrdType + "'  and LabelStatus='" + strLblSts + "'";
                 dts = base.ODataServer.GetDataTable(Qry);
             }
             catch(Exception ex)
@@ -800,7 +803,7 @@ namespace AQUA
             DataTable dty = new DataTable();
             try
             {
-                string Qry = "SELECT batchNo, chemicalStatus ,soakingTankBarcodeId,barcodeIdsOfCrate FROM SoakingFinalData WHERE soakingTankBarcodeId='" + strSoakingTankID + "' ";//OR barcodeIdsOfCrate='" + strSoakingTankID + "'
+                string Qry = "SELECT batchNo, chemicalStatus ,soakingTankBarcodeId,barcodeIdsOfCrate FROM SoakingFinalData WHERE soakingTankBarcodeId='" + strSoakingTankID + "' OR barcodeIdsOfCrate='" + strSoakingTankID + "'";
                 dty = base.ODataServer.GetDataTable(Qry);
             }
             catch
@@ -811,71 +814,48 @@ namespace AQUA
         }
 
 
-        public DataTable GetPackSpecData(string strPoNo,string strGrade)
+        
+
+        public DataTable GetProdTypes(string strBatchNo,string strLblsts)
         {
-            DataTable dts = new DataTable();
-            try
-            {
-                string Qry = "select * from PackingSpecification where PONumber='" + strPoNo + "' and Grade='" + strGrade + "'";
-                dts = base.ODataServer.GetDataTable(Qry);
-            }
-            catch(Exception ex)
-            {
-                StringBuilder err = new StringBuilder();
-                err.Append(" Message : " + ex.Message);
-                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
-                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
-                err.AppendLine(" SOURCE : " + ex.Source);
-                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
-                dts = null;
-            }
-            return dts;
+            DataTable dt = new DataTable();
+            string QRY = "SELECT DISTINCT IQFBP.Variety AS ProductType FROM IQFBarcodePrinting IQFBP join SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
+                            "WHERE BatchNumber='" + strBatchNo + "' AND IQFBP.Variety IS NOT NULL AND IQFBP.Variety <> '' AND LabelStatus='" + strLblsts + "'";
+            dt = base.ODataServer.GetDataTable(QRY);
+            return dt;
         }
 
-        public DataTable GetSoakingType(string tableName , string strTxtFld)
+        public DataTable GetChemSts(string strBatchNo, string strLblsts)
         {
-            DataTable dtBind = new DataTable();
-            try
-            {
-
-                string strQry = "Select  ValueField as soakingType from General where TableName ='" + tableName + "' and TextField='" + strTxtFld + "' and flag= 1";
-                dtBind = base.ODataServer.GetDataTable(strQry);
-
-
-            }
-            catch (Exception ex)
-            {
-                StringBuilder err = new StringBuilder();
-                err.Append(" Message : " + ex.Message);
-                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
-                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
-                err.AppendLine(" SOURCE : " + ex.Source);
-                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
-                dtBind = null;
-            }
-            return dtBind;
+            DataTable dt = new DataTable();
+            string QRY = "SELECT DISTINCT SKFD.chemicalStatus AS ChemicalSts FROM IQFBarcodePrinting IQFBP JOIN SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
+                            "WHERE BatchNumber='" + strBatchNo + "' AND SKFD.chemicalStatus IS NOT NULL AND SKFD.chemicalStatus <> '' AND LabelStatus='" + strLblsts + "' ORDER BY chemicalStatus DESC;";
+            dt = base.ODataServer.GetDataTable(QRY);
+            return dt;
         }
 
-        //public DataTable GetPdtyp(string strBatchno)
-        //{
-        //    DataTable dtr = new DataTable();
-        //    try
-        //    {
-        //        string Qry = "select Distinct Variety from IQFBarcodePrinting WHERE BatchNumber='" + strBatchno + "' and LabelStatus='Scanned'";
-        //        dtr = base.ODataServer.GetDataTable(Qry);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        StringBuilder err = new StringBuilder();
-        //        err.Append(" Message : " + ex.Message);
-        //        err.AppendLine(" STACK TRACE : " + ex.StackTrace);
-        //        err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
-        //        err.AppendLine(" SOURCE : " + ex.Source);
-        //        Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
-        //        dtr = null;
-        //    }
-        //    return dtr;
-        //}
+        public DataTable GetNoOfSlabPacked(string strBatchno,string strPrdTyp,string strGrade,string strActPacstyl)
+        {
+            DataTable dth = new DataTable();
+
+            string Qrys = "SELECT COUNT(*) AS PackedSlabCnt FROM IQFBarcodePrinting  WHERE BatchNumber='" + strBatchno + "' AND LabelStatus='Scanned' AND" +
+                " Variety ='" + strPrdTyp + "' AND Grade='" + strGrade + "'  AND Actpackingstyle='" + strActPacstyl + "'";
+            dth = base.ODataServer.GetDataTable(Qrys);
+            return dth;
+        }
+
+        public DataTable GetCountdtls(decimal strcnt,string pdtype,string strChmSts)
+        {
+            DataTable dtc;
+
+            string Qery = "SELECT " + pdtype + "  FROM PackingYieldMaster WHERE HeadOnCount = " + strcnt + " AND ChemicalStatus='" + strChmSts + "'";
+            dtc = base.ODataServer.GetDataTable(Qery);
+
+            return dtc;
+
+        }
+
+
 
     }
 }
