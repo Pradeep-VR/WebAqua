@@ -73,7 +73,7 @@ namespace AQUA
                 }
                 else { }
             }
-            catch
+            catch (Exception ex)
             {
 
             }
@@ -87,25 +87,33 @@ namespace AQUA
             decimal NoofSlab = 0;
             string[] vlus = ActPckStyl.Split('*');
 
-            wghtofOneSlab = Convert.ToDecimal(vlus[1]);
-            NoofSlab = slbCnt;
+            try
+            {
+                wghtofOneSlab = Convert.ToDecimal(vlus[1]);
+                NoofSlab = slbCnt;
 
-            if (Type == "Lbs")
-            {
-                string lb = "0.454";
-                decimal v = Convert.ToDecimal(lb.ToString());
+                if (Type == "Lbs")
+                {
+                    string lb = "0.454";
+                    decimal v = Convert.ToDecimal(lb.ToString());
 
-                ret = wghtofOneSlab * NoofSlab * v;
+                    ret = wghtofOneSlab * NoofSlab * v;
+                }
+                else if (Type == "Grms")
+                {
+                    string grm = "0.001";
+                    decimal v = Convert.ToDecimal(grm.ToString());
+                    ret = wghtofOneSlab * NoofSlab * v;
+                }
+                else//For Kg Type
+                {
+                    ret = wghtofOneSlab * NoofSlab;
+                }
+                
             }
-            else if (Type == "Grms")
+            catch(Exception ex)
             {
-                string grm = "0.001";
-                decimal v = Convert.ToDecimal(grm.ToString());
-                ret = wghtofOneSlab * NoofSlab * v;
-            }
-            else//For Kg Type
-            {
-                ret = wghtofOneSlab * NoofSlab;
+
             }
             return ret;
         }
@@ -176,7 +184,7 @@ namespace AQUA
 
 
             }
-            catch
+            catch(Exception ex)
             {
 
             }
