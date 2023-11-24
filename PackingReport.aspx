@@ -102,81 +102,81 @@
                                             <columns>
                                                 <asp:TemplateField HeaderText="PO Number" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdPoNum") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvPoNum") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Product Type" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdPrdType") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvPrdType") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Grade" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdGrade") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvGrade") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="SoakingType" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdSoakType") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvSoakType") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Type Of Freezing" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdTypeOfFreezing") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvTypeOfFreezing") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Packing Style" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdPackStyle") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvPackStyle") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Weight Unit" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdWeightUnit") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvWeightUnit") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="No Of Slab Packed" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdSlabPacked") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvSlabPacked") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Qty In Kg" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdQuantity") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvQuantity") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="Total" ItemStyle-Height="50px">
+                                                <%--<asp:TemplateField HeaderText="Total" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdTotal") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvTotal") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="Final HOC Cov" ItemStyle-Height="50px">
                                                     <itemtemplate>
-                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("grdHOCConv") %>' />
+                                                        <asp:Label ID="lTestingType" ItemStyle-ForeColor="#ff0000" runat="server" Text='<%# Eval("gvHOCConv") %>' />
                                                     </itemtemplate>
                                                     <headerstyle bordercolor="#3699FF" borderwidth="1px" />
                                                     <itemstyle bordercolor="#3699FF" borderwidth="1px" />
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
 
                                             </columns>
                                         </asp:GridView>
