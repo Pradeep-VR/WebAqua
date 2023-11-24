@@ -1,0 +1,477 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ITCAQUA.master.cs" Inherits="ITCAQUA" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>Aqua Application - Barcode</title>
+
+    <meta name="description" content="Common form elements and layouts" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/itcfavicon.png" />
+    <!-- Custom CSS -->
+    <link href="dist/css/style.min.css" rel="stylesheet" />
+
+    <!-- Favicon icon -->
+    <%--<link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png" />--%>
+    <!-- This Page CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" />
+    <!-- Custom CSS -->
+    <link href="dist/css/style.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="assets/css/chosen.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-timepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/daterangepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap-colorpicker.min.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+		<![endif]-->
+    <link rel="stylesheet" href="assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body class="no-skin">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="smMain" runat="server"></asp:ScriptManager>
+        <!-- -------------------------------------------------------------- -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- -------------------------------------------------------------- -->
+        <div class="preloader">
+            <%--<svg class="tea lds-ripple" width="37" height="48" viewbox="0 0 37 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27.0819 17H3.02508C1.91076 17 1.01376 17.9059 1.0485 19.0197C1.15761 22.5177 1.49703 29.7374 2.5 34C4.07125 40.6778 7.18553 44.8868 8.44856 46.3845C8.79051 46.79 9.29799 47 9.82843 47H20.0218C20.639 47 21.2193 46.7159 21.5659 46.2052C22.6765 44.5687 25.2312 40.4282 27.5 34C28.9757 29.8188 29.084 22.4043 29.0441 18.9156C29.0319 17.8436 28.1539 17 27.0819 17Z" stroke="#2962FF" stroke-width="2"></path>
+                <path d="M29 23.5C29 23.5 34.5 20.5 35.5 25.4999C36.0986 28.4926 34.2033 31.5383 32 32.8713C29.4555 34.4108 28 34 28 34" stroke="#2962FF" stroke-width="2"></path>
+                <path id="teabag" fill="#2962FF" fill-rule="evenodd" clip-rule="evenodd" d="M16 25V17H14V25H12C10.3431 25 9 26.3431 9 28V34C9 35.6569 10.3431 37 12 37H18C19.6569 37 21 35.6569 21 34V28C21 26.3431 19.6569 25 18 25H16ZM11 28C11 27.4477 11.4477 27 12 27H18C18.5523 27 19 27.4477 19 28V34C19 34.5523 18.5523 35 18 35H12C11.4477 35 11 34.5523 11 34V28Z"></path>
+                <path id="steamL" d="M17 1C17 1 17 4.5 14 6.5C11 8.5 11 12 11 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#2962FF"></path>
+                <path id="steamR" d="M21 6C21 6 21 8.22727 19 9.5C17 10.7727 17 13 17 13" stroke="#2962FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>--%>
+            <div style="margin-top:20%">
+                <center>
+                    <img src="assets/images/shrimp.gif" width="150px"; height="150px";/>
+                </center>
+            </div>
+            
+            
+            <%--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><circle cx="12" cy="20" r="2"></circle><circle cx="12" cy="4" r="2"></circle><circle cx="6.343" cy="17.657" r="2"></circle><circle cx="17.657" cy="6.343" r="2"></circle><circle cx="4" cy="12" r="2.001"></circle><circle cx="20" cy="12" r="2"></circle><circle cx="6.343" cy="6.344" r="2"></circle><circle cx="17.657" cy="17.658" r="2"></circle></svg>--%>
+        </div>
+        <!-- -------------------------------------------------------------- -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- -------------------------------------------------------------- -->
+        <div id="main-wrapper">
+            <!-- -------------------------------------------------------------- -->
+            <!-- Topbar header - style you can find in pages.scss -->
+            <!-- -------------------------------------------------------------- -->
+            <header class="topbar">
+                <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                    <div class="navbar-header">
+                        <!-- This is for the sidebar toggle which is visible on mobile only -->
+                        <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- Logo -->
+                        <!-- -------------------------------------------------------------- -->
+                        <a class="navbar-brand">
+                            <!-- Logo icon -->
+                            <b class="logo-icon">
+                                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                                <!-- Dark Logo icon -->
+                                <img src="images/ITC_Limited-Logo.png" alt="homepage" class="dark-logo" />
+                                <!-- Light Logo icon -->
+                                <%-- <img src="images/ITC_Limited-Logo.png" alt="homepage" class="light-logo" />--%>
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text"></span>
+                        </a>
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- End Logo -->
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- Toggle which is visible on mobile only -->
+                        <!-- -------------------------------------------------------------- -->
+                        <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                            data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                                class="ti-more"></i></a>
+                    </div>
+                    <!-- -------------------------------------------------------------- -->
+                    <!-- End Logo -->
+                    <!-- -------------------------------------------------------------- -->
+                    <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- toggle and nav items -->
+                        <!-- -------------------------------------------------------------- -->
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item d-none d-md-block"><a
+                                class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                                data-sidebartype="mini-sidebar"><i class="mdi mdi-menu fs-7"></i></a></li>
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- mega menu -->
+                            <!-- -------------------------------------------------------------- -->
+                            <%--  <img src="images/ITC_Limited-Logo.png" alt="homepage" class="dark-logo" height="55px" />--%>
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- End mega menu -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- create new -->
+                            <!-- -------------------------------------------------------------- -->
+
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- Search -->
+                            <!-- -------------------------------------------------------------- -->
+                            <asp:Label ID="lbl" runat="server" ForeColor="White" Text="       Barcode Digitization - AQUA Application " Font-Size="XX-Large" />
+                        </ul>
+                        <!-- -------------------------------------------------------------- -->
+                        <!-- Right side toggle and nav items -->
+                        <!-- -------------------------------------------------------------- -->
+                        <ul class="navbar-nav">
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- create new -->
+                            <!-- -------------------------------------------------------------- -->
+
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- Comment -->
+                            <!-- -------------------------------------------------------------- -->
+
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- End Comment -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- Messages -->
+                            <!-- -------------------------------------------------------------- -->
+
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- End Messages -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- User profile and search -->
+                            <!-- -------------------------------------------------------------- -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img
+                                        src="assets/images/users/1.jpg" alt="user" class="rounded-circle"
+                                        width="31"></a>
+                                <div class="dropdown-menu dropdown-menu-end user-dd animated flipInY">
+                                    <span class="with-arrow"><span class="bg-primary"></span></span>
+                                    <div class="d-flex no-block align-items-center p-3 bg-primary text-white mb-2">
+                                        <div class="">
+                                            <img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="60">
+                                        </div>
+                                        <div class="ms-2">
+                                            <h4 class="mb-0">
+                                                <asp:Label ID="lblLoggedIn1" runat="server" />
+                                            </h4>
+                                            <p class=" mb-0">
+                                                <asp:Label ID="lblUserType1" runat="server" />
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <a class="dropdown-item" href="Login.aspx"><i data-feather="log-out"
+                                        class="feather-sm text-danger me-1 ms-1"></i>Logout</a>
+                                    <div class="dropdown-divider"></div>
+                                    <%--  <div class="pl-4 p-2">
+                                    <a href="#"
+                                        class="btn d-block w-100 btn-primary rounded-pill">View Profile</a>
+                                </div>--%>
+                                </div>
+                            </li>
+                            <!-- -------------------------------------------------------------- -->
+                            <!-- User profile and search -->
+                            <!-- -------------------------------------------------------------- -->
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <!-- -------------------------------------------------------------- -->
+            <!-- End Topbar header -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- -------------------------------------------------------------- -->
+            <aside class="left-sidebar">
+                <!-- Sidebar scroll-->
+                <div class="scroll-sidebar">
+                    <!-- Sidebar navigation-->
+                    <nav class="sidebar-nav">
+                        <ul id="sidebarnav">
+                            <!-- User Profile-->
+                            <li>
+                                <!-- User Profile-->
+                                <div class="user-profile d-flex no-block dropdown mt-3">
+                                    <div class="user-pic">
+                                        <img src="assets/images/users/1.jpg" alt="users"
+                                            class="rounded-circle" width="40" />
+                                    </div>
+                                    <div class="user-content hide-menu ms-2">
+                                        <a href="#" class="" id="Userdd" role="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <h5 class="mb-0 user-name font-medium">
+                                                <h5 class="mb-0">
+                                                    <asp:Label ID="lblLoggedIn" runat="server" />
+                                                    <i
+                                                        class="fa fa-angle-down"></i></h5>
+                                                <span class="op-5 user-email">
+                                                    <asp:Label ID="lblUserType" runat="server" /></span>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
+                                            <%-- <a class="dropdown-item" href="#"><i data-feather="user" class="feather-sm text-info me-1"></i>My
+                                            Profile</a>
+                                        <a class="dropdown-item" href="#"><i data-feather="credit-card" class="feather-sm text-primary me-1"></i>
+                                            My Balance</a>
+                                        <a class="dropdown-item" href="#"><i data-feather="mail" class="feather-sm text-success me-1"></i>
+                                            Inbox</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#"><i data-feather="settings" class="feather-sm text-warning me-1"></i>
+                                            Account Setting</a>--%>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="Login.aspx"><i data-feather="log-out"
+                                                class="feather-sm text-danger me-1"></i>Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End User Profile-->
+                            </li>
+                            <%-- <li class="p-3 mt-2"><a href="#" class="btn btn-block create-btn text-white no-block d-flex align-items-center"><i class="fa fa-plus-square"></i><span class="hide-menu ms-1">Create New</span> </a></li>--%>
+                            <!-- User Profile-->
+                            <%--<li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i><span class="hide-menu">Personal</span></li>--%>
+                            <li class="sidebar-item" id="liMasters" runat="server"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">MASTERS </span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="UserCreation.aspx" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">User Creation </span></a></li>
+                                    <li class="sidebar-item"><a href="ResetPassword.aspx" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Reset Password </span></a></li>
+
+                                </ul>
+                            </li>
+                            <li class="sidebar-item" id="liQuality" runat="server"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="sidebar" class="feather-icon"></i><span class="hide-menu">QUALITY</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="QualityEntry.aspx" class="sidebar-link"><i class="mdi mdi-view-quilt"></i><span class="hide-menu">Quality Entry</span></a></li>
+                                    <li class="sidebar-item"><a href="QualityView.aspx" class="sidebar-link"><i class="mdi mdi-view-parallel"></i><span class="hide-menu">Quality View </span></a></li>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item" id="divSoaking" runat="server"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">SOAKING </span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="RMConsumption.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">RM Consumption</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="sidebar-item" id="divPeeling" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">PEELING </span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="PeelingWorkEfficiency.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Peeling Work Efficiency</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="sidebar-item" id="liPurchase" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" style="color: blue" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">PURCHASE </span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="PurchaseModule.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">PURCHASE</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="sidebar-item" id="li1" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">PACKING SPECIFICATION</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="PackingSpecification.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Packing Specification - ADD </span></a></li>
+                                    <li class="sidebar-item"><a href="PackingSpecificationView.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Packing Specification - VIEW </span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="sidebar-item" id="li2" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">OUT FEED ENTRY</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="IQFOutFeed.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">IQF </span></a></li>
+                                    <li class="sidebar-item"><a href="BlockOutFeed.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">BLOCK</span></a></li>
+                                </ul>
+                            </li>
+
+                            <li class="sidebar-item" id="li3" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">PACKING</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="PackingIQF.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">IQF </span></a></li>
+                                    <li class="sidebar-item"><a href="PackingBlock.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">BLOCK</span></a></li>
+                                </ul>
+                            </li>
+                             <li class="sidebar-item" id="li4" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">PRINTING</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="PallentPrinting.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">PALLET PRINTING </span></a></li>
+                                    
+                                </ul>
+                            </li>
+                            <li class="sidebar-item" id="li5" runat="server" visible="true"><a class="sidebar-link has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i data-feather="clipboard" class="feather-icon"></i><span class="hide-menu">REPORT</span></a>
+                                <ul aria-expanded="false" class="collapse  first-level">
+                                    <li class="sidebar-item"><a href="GradingFinalReport.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">GradingFinal Report</span></a></li>
+                                    <li class="sidebar-item"><a href="PeelingBatchwise.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Peeling BatchWise Report</span></a></li>
+                                    <li class="sidebar-item"><a href="PeellingFloorBalance.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Peeling FloorBalance Report</span></a></li>
+                                    <li class="sidebar-item"><a href="ReceivingReport.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Receiving Report</span></a></li>
+                                    <li class="sidebar-item"><a href="PackingReport.aspx" class="sidebar-link"><i class="mdi mdi-format-align-left"></i><span class="hide-menu">Packing Report</span></a></li>
+                                </ul>
+                            </li>
+
+
+
+
+                            <li class="sidebar-item"><a class="sidebar-link waves-effect waves-dark sidebar-link" href="Login.aspx" aria-expanded="false"><i data-feather="log-out" class="feather-icon"></i><span class="hide-menu">Log Out</span></a></li>
+                        </ul>
+                    </nav>
+                    <!-- End Sidebar navigation -->
+                </div>
+                <!-- End Sidebar scroll-->
+            </aside>
+            <!-- -------------------------------------------------------------- -->
+            <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- -------------------------------------------------------------- -->
+            <!-- Page wrapper  -->
+            <!-- -------------------------------------------------------------- -->
+            <div class="page-wrapper">
+                <!-- -------------------------------------------------------------- -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- -------------------------------------------------------------- -->
+                <%-- <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Form Bootstrap Switch</h4>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <div class="me-2">
+                                <div class="lastmonth"></div>
+                            </div>
+                            <div class=""><small>LAST MONTH</small>
+                                <h4 class="text-info mb-0 font-medium">$58,256</h4></div>
+                        </div>
+                    </div>
+                </div>
+            </div>--%>
+                <!-- -------------------------------------------------------------- -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- -------------------------------------------------------------- -->
+                <!-- -------------------------------------------------------------- -->
+                <!-- Container fluid  -->
+                <!-- -------------------------------------------------------------- -->
+                <div class="container-fluid">
+                    <!-- -------------------------------------------------------------- -->
+                    <!-- Start Page Content -->
+                    <!-- -------------------------------------------------------------- -->
+                    <div class="row">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+
+                    </div>
+                    <!-- -------------------------------------------------------------- -->
+                    <!-- End PAge Content -->
+                    <!-- -------------------------------------------------------------- -->
+                </div>
+                <footer class="footer text-center">
+                   ⓒ Copyrights By Teamliftss
+                </footer>
+               <%-- <footer class="footer text-center">
+                    All Rights Reserved by Teamliftss. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+                </footer>--%>
+                <!-- -------------------------------------------------------------- -->
+                <!-- End footer -->
+                <!-- -------------------------------------------------------------- -->
+            </div>
+            <!-- -------------------------------------------------------------- -->
+            <!-- End Page wrapper  -->
+            <!-- -------------------------------------------------------------- -->
+        </div>
+        <!-- -------------------------------------------------------------- -->
+        <!-- End Wrapper -->
+        <!-- -------------------------------------------------------------- -->
+        <!-- -------------------------------------------------------------- -->
+        <!-- customizer Panel -->
+        <!-- -------------------------------------------------------------- -->
+        
+        <div class="chat-windows"></div>
+        <!-- -------------------------------------------------------------- -->
+        <!-- Required Js files -->
+        <!-- -------------------------------------------------------------- -->
+        <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Theme Required Js -->
+        <script src="dist/js/app.min.js"></script>
+        <script src="dist/js/app.init.js"></script>
+        <script src="dist/js/app-style-switcher.js"></script>
+        <!-- perfect scrollbar JavaScript -->
+        <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+        <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+        <!--Wave Effects -->
+        <script src="dist/js/waves.js"></script>
+        <!--Menu sidebar -->
+        <script src="dist/js/sidebarmenu.js"></script>
+        <!--Custom JavaScript -->
+        <script src="dist/js/feather.min.js"></script>
+        <script src="dist/js/custom.min.js"></script>
+        <!-- --------------------------------------------------------------- -->
+        <!-- This page JavaScript -->
+        <!-- --------------------------------------------------------------- -->
+        <script src="assets/libs/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+        <script>
+            $(".bt-switch input[type='checkbox'], .bt-switch input[type='radio']").bootstrapSwitch();
+            var radioswitch = function () {
+                var bt = function () {
+                    $(".radio-switch").on("switch-change", function () {
+                        $(".radio-switch").bootstrapSwitch("toggleRadioState")
+                    }), $(".radio-switch").on("switch-change", function () {
+                        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck")
+                    }), $(".radio-switch").on("switch-change", function () {
+                        $(".radio-switch").bootstrapSwitch("toggleRadioStateAllowUncheck", !1)
+                    })
+                };
+                return {
+                    init: function () {
+                        bt()
+                    }
+                }
+            }();
+            $(document).ready(function () {
+                radioswitch.init()
+            });
+        </script>
+    </form>
+</body>
+
+</html>

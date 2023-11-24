@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AQUAWEB", ".", "{016C9596-C04A-477E-A688-2439E644F87A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_47456"
+		Debug.AspNetCompiler.PhysicalPath = "..\AQUAWEB\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_47456\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_47456"
+		Release.AspNetCompiler.PhysicalPath = "..\AQUAWEB\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_47456\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "47456"
+		SlnRelativePath = "..\AQUAWEB\"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{016C9596-C04A-477E-A688-2439E644F87A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{016C9596-C04A-477E-A688-2439E644F87A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C43B7196-08E9-4A02-AF19-0D891C7C5071}
+	EndGlobalSection
+EndGlobal

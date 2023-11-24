@@ -1,0 +1,12 @@
+﻿
+    /* Target the header row of the GridView and make it sticky */
+    #gvPackSpecDetails thead th {
+        position: sticky;
+        top: 0;
+        background-color: #f0f0f0; /* Optional: You can change the background color here */
+    }
+
+
+
+
+
