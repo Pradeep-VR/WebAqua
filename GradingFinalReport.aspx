@@ -7,10 +7,13 @@
 
     <style>
 
-     tbody tr:first-child{      
-     position: sticky;
-     top: 0;
- }
+     tbody tr:first-child
+     {         
+         position: sticky;
+         top: 0;
+         color:#b22222;
+
+     }
 
      /*tbody td:first-child{      
      position: sticky;
@@ -77,7 +80,7 @@
                                 </div>         
                                 <div class="col-sm-2">
                                     <div class="mb-2 row">
-                                        <label for="fname">.</label>
+                                        <label for="fname" style="color:transparent">.</label>
                                         <div class="form-control-sm">
                                         <asp:Button ID="btnView" runat="server" Visible="true" Text="View" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnView_Click" />
                                             </div>
@@ -120,7 +123,7 @@
                                     </div>
                                 <div class="col-md-2">
                                         <div class="mb-2 row">
-                                            <label for="fname">Smpl Beheading Yield%</label>
+                                            <label for="fname">Smpl Beheading Yld%</label>
                                             <asp:TextBox ID="txtbeheadyield" runat="server" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
@@ -161,7 +164,7 @@
                                     </div>
                                 <div class="col-md-1">
                                         <div class="mb-2 row">
-                                            <label for="fname">ShrimpColor</label>
+                                            <label for="fname">Shrimp_Clr</label>
                                             <asp:TextBox ID="txtcolor" runat="server" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
@@ -174,9 +177,11 @@
                                     <div class="col-sm-2">
                                 
                                     <div class="mb-2 row">
-                                    <asp:Button ID="btnexpexcel" runat="server" Visible="true" Text="Export as Exl" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexpexcel_Click" />                                    
+                                        <label for="fname" style="color:transparent">.</label>
+                                        <asp:Button ID="btnexpexcel" runat="server" Visible="true" Text="Export as Exl" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexpexcel_Click" />                                    
                                       </div>      
                                     <div class="mb-1 row">
+                                        <label for="fname" style="color:transparent">.</label>
                                         <asp:Button ID="btnexportWord" runat="server" Visible="false" Text="Export as Word" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexportWord_Click" />
                                     </div>
                                 

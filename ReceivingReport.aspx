@@ -71,7 +71,7 @@
                                 </div>  
                                  <div class="col-sm-2">
                                         <div class="mb-2 row">
-                                            <label for="fname">.</label>
+                                            <label for="fname" style="color:transparent">.</label>
                                             <div class="form-control-sm">
                                             <asp:Button ID="btnView" runat="server" Visible="true" Text="View" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnView_Click" />
                                                 </div>
@@ -79,8 +79,8 @@
                                 </div>
                                     <div class="col-sm-2">
                                         <div class="mb-2 row">
-                                            <label for="fname">.</label>
-                                            <div class="form-control-sm">
+                                            <label for="fname" style="color:transparent">.</label>
+                                            <div class="form-control-sm" >
                                             <asp:Button ID="btnexport" runat="server" Visible="true" Text="Export" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexport_Click" />
                                                 </div>
                                         </div>                     

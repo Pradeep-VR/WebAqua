@@ -9,6 +9,7 @@
      tbody tr:first-child{      
      position: sticky;
      top: 0;
+     color:#b22222;
  }
 
      /*tbody td:first-child{      
