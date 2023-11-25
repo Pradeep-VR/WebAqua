@@ -19,9 +19,38 @@
      position: sticky;
      left:0;
  }*/
+    #loader {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.75) url('assets/images/shrimp.gif') no-repeat center center;
+        z-index: 10000;
+        /*background-image: url('../../Images/Loading.gif');*/
+    }
+
 
  </style>
 
+    <script>
+
+
+
+        $(document).ready(function loader() {
+
+            var spinner = $('#loader');
+            setup();
+
+        }
+
+            function setup() {
+                spinner.show();
+            }
+
+    </script>
     <%-- divEntry --%>
     <div class="main-content-inner" id="divEntry" runat="server">
         <div class="page-content">

@@ -42,7 +42,15 @@ namespace AQUA
 
         }
         protected void btnView_Click(object sender, EventArgs e)
-        {            
+        {
+            //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "loader", "<script type='text/javascript'>loader();</script>", true);
+            if (ScriptManager.GetCurrent(this) != null)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "MyScript", "loader()", true);
+                
+
+            }
+
             DataTable combinedDt = new DataTable(); // Create a DataTable to hold the combined results
             int Rcnt = 0;
             string batcno = "";
