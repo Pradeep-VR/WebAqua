@@ -7,18 +7,50 @@
 
     <style>
 
-     tbody tr:first-child{      
-     position: sticky;
-     top: 0;
- }
+     tbody tr:first-child
+     {         
+         position: sticky;
+         top: 0;
+         color:#b22222;
+
+     }
 
      /*tbody td:first-child{      
      position: sticky;
      left:0;
  }*/
+    #loader {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.75) url('assets/images/shrimp.gif') no-repeat center center;
+        z-index: 10000;
+        /*background-image: url('../../Images/Loading.gif');*/
+    }
+
 
  </style>
 
+    <script>
+
+
+
+        $(document).ready(function loader() {
+
+            var spinner = $('#loader');
+            setup();
+
+        }
+
+            function setup() {
+                spinner.show();
+            }
+
+    </script>
     <%-- divEntry --%>
     <div class="main-content-inner" id="divEntry" runat="server">
         <div class="page-content">
@@ -77,7 +109,7 @@
                                 </div>         
                                 <div class="col-sm-2">
                                     <div class="mb-2 row">
-                                        <label for="fname">.</label>
+                                        <label for="fname" style="color:transparent">.</label>
                                         <div class="form-control-sm">
                                         <asp:Button ID="btnView" runat="server" Visible="true" Text="View" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnView_Click" />
                                             </div>
@@ -120,7 +152,7 @@
                                     </div>
                                 <div class="col-md-2">
                                         <div class="mb-2 row">
-                                            <label for="fname">Smpl Beheading Yield%</label>
+                                            <label for="fname">Smpl Beheading Yld%</label>
                                             <asp:TextBox ID="txtbeheadyield" runat="server" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
@@ -161,7 +193,7 @@
                                     </div>
                                 <div class="col-md-1">
                                         <div class="mb-2 row">
-                                            <label for="fname">ShrimpColor</label>
+                                            <label for="fname">Shrimp_Clr</label>
                                             <asp:TextBox ID="txtcolor" runat="server" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
@@ -174,9 +206,11 @@
                                     <div class="col-sm-2">
                                 
                                     <div class="mb-2 row">
-                                    <asp:Button ID="btnexpexcel" runat="server" Visible="true" Text="Export as Exl" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexpexcel_Click" />                                    
+                                        <label for="fname" style="color:transparent">.</label>
+                                        <asp:Button ID="btnexpexcel" runat="server" Visible="true" Text="Export as Exl" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexpexcel_Click" />                                    
                                       </div>      
                                     <div class="mb-1 row">
+                                        <label for="fname" style="color:transparent">.</label>
                                         <asp:Button ID="btnexportWord" runat="server" Visible="false" Text="Export as Word" CssClass="form-control btn-primary" ForeColor="White" OnClick="btnexportWord_Click" />
                                     </div>
                                 

@@ -238,7 +238,10 @@ namespace AQUA
                                             else { }
 
                                             decimal rev = Typeconvertion(WgtUnt, PckStyl, NoSlabPacked);
-                                            totlst.Add(rev);
+                                            QtyinKg = rev;
+                                            totlst.Add(QtyinKg);
+
+
 
                                         }
                                         else
@@ -246,7 +249,7 @@ namespace AQUA
                                             
                                         }
 
-
+                                        FinalPackingrpt.Rows.Add(PoNo, PrdTyp, Grade, SoakingTyp, FreezTyp, PckStyl, WgtUnt, NoSlabPacked, QtyinKg);
                                     }
                                     else
                                     {
@@ -254,26 +257,26 @@ namespace AQUA
                                     }
                                 }
 
-
+                                //FinalPackingrpt.Rows.Add(PoNo, PrdTyp, Grade, SoakingTyp, FreezTyp, PckStyl, WgtUnt, NoSlabPacked, QtyinKg);
                             }//Dtsl Loop End Here after Nxt Pd Type comes
 
-                            FinalPackingrpt.Rows.Add(PoNo, PrdTyp, Grade, SoakingTyp, FreezTyp, PckStyl, WgtUnt, NoSlabPacked, QtyinKg);
+                            foreach (decimal res in totlst)
+                            {
+                                if (Total == 0)
+                                {
+                                    Total = res;
+                                }
+                                else
+                                {
+                                    Total = Total + res;
+                                }
+
+                            }
+                            FinalPackingrpt.Rows.Add("", "", "", "", "", "", "", "Total", Total);
 
                         }
 
-                        foreach(decimal res in totlst)
-                        {
-                            if(Total == 0)
-                            {
-                                Total = res;
-                            }
-                            else
-                            {
-                                Total = Total + res;
-                            }
-                            
-                        }
-                        FinalPackingrpt.Rows.Add("", "", "", "", "", "", "", "Total", Total);
+                        
 
                         decimal HonCnt = Convert.ToDecimal(txtheadoncnt.Text);
                         FHOCcnv = CntCalculation(PrdTyp, HonCnt, Total, ChmSts);

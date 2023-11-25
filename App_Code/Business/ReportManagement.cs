@@ -839,7 +839,7 @@ namespace AQUA
             DataTable dth = new DataTable();
 
             string Qrys = "SELECT COUNT(*) AS PackedSlabCnt FROM IQFBarcodePrinting  WHERE BatchNumber='" + strBatchno + "' AND LabelStatus='Scanned' AND" +
-                " Variety ='" + strPrdTyp + "' AND Grade='" + strGrade + "'  AND Actpackingstyle='" + strActPacstyl + "'";
+                            " Variety ='" + strPrdTyp + "' AND Grade='" + strGrade + "'  AND Actpackingstyle='" + strActPacstyl + "'";
             dth = base.ODataServer.GetDataTable(Qrys);
             return dth;
         }
