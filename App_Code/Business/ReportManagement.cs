@@ -48,7 +48,7 @@ namespace AQUA
             {
                 string strQry = "SELECT DISTINCT batchnumber FROM BeheadingFinalData bfd WHERE bfd.batchnumber IN ( " +
                  " SELECT gp.batchNumber  FROM GradingProcess gp  WHERE  convert(varchar,gp.gradingDateTime,23)  BETWEEN '" + strFromDate + "' AND '" + strTodate + "' " +
-                 " and bfd.Purchasetype = '" + strPurchaseType + "') ";
+                 " and bfd.Purchasetype IN " + strPurchaseType + " )";
                 dtBind = base.ODataServer.GetDataTable(strQry);
             }
             catch (Exception ex)
@@ -130,7 +130,7 @@ namespace AQUA
             return dt;
         }
 
-        public DataTable BRGetBatchnoPP(string frmdate,string todate,string strpurtype,string saudono)
+        public DataTable BRGetBatchnoPP(string frmdate, string todate, string strpurtype, string saudono)
         {
             DataTable dtsd = new DataTable();
             try
@@ -139,7 +139,7 @@ namespace AQUA
                     "BFD.batchNumber = UFP.batchNo  where convert(varchar,PUC.PurchaseDate,23) between '" + frmdate + "' and '" + todate + "' and PUC.PurchaseType='" + strpurtype + "'  and PUC.SaudaNumberCode='" + saudono + "' Group BY UFP.batchNo,PUC.SaudaNumberCode";
                 dtsd = base.ODataServer.GetDataTable(qry);
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -158,7 +158,7 @@ namespace AQUA
             string srtq = "";
             try
             {
-                if(toyear == "")
+                if (toyear == "")
                 {
                     srtq = "select distinct PUC.SaudaNumberCode as SadoNo from Purchase PUC join UnloadFinalProcess UFP on UFP.saudaNumber = PUC.SaudaNumberCode  join  BeheadingFinalData BFD on " +
                     "BFD.batchNumber = UFP.batchNo  where " + frmyear + " and PUC.PurchaseType='" + strpurtyp + "' Group BY PUC.SaudaNumberCode";
@@ -168,10 +168,10 @@ namespace AQUA
                     srtq = "select distinct PUC.SaudaNumberCode as SadoNo from Purchase PUC join UnloadFinalProcess UFP on UFP.saudaNumber = PUC.SaudaNumberCode  join  BeheadingFinalData BFD on " +
                     "BFD.batchNumber = UFP.batchNo  where convert(varchar,PUC.PurchaseDate,23) between '" + frmyear + "' and '" + toyear + "' and PUC.PurchaseType='" + strpurtyp + "' Group BY PUC.SaudaNumberCode";
                 }
-                
+
                 dty = base.ODataServer.GetDataTable(srtq);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -192,7 +192,7 @@ namespace AQUA
                 string qry = "select Distinct ValueField from general where TableName='MonthMaster' and TextField='" + strmnth + "' and Flag=1";
                 dty = base.ODataServer.GetDataTable(qry);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -300,13 +300,13 @@ namespace AQUA
             return dts;
         }
 
-        public DataTable BRGetPlntCnt(string strbatchno,string strsts,string w)
+        public DataTable BRGetPlntCnt(string strbatchno, string strsts, string w)
         {
             DataTable dtsd = new DataTable();
             string srt = "";
             try
             {
-                if(strsts == "Pond Purchase" && w == "")
+                if (strsts == "Pond Purchase" && w == "")
                 {
                     //srt = "select distinct Wm.SaudaNumberCode,Ufp.batchNo,sum(convert(float,Wm.TotalWeight))as pndPlantWt from Purchase Pc join UnloadFinalProcess Ufp on Ufp.saudaNumber = Pc.SaudaNumberCode " +
                     //    "join Weighment Wm on Wm.SaudaNumberCode = Ufp.saudaNumber where Ufp.batchNo='" + strbatchno + "' group by Wm.SaudaNumberCode,Ufp.batchNo,Wm.TotalWeight";
@@ -314,7 +314,7 @@ namespace AQUA
                         "join Weighment Wm on Wm.SaudaNumberCode = Ufp.saudaNumber where Ufp.batchNo='" + strbatchno + "' group by Wm.SaudaNumberCode,Ufp.batchNo,Wm.TotalWeight,Wm.LotNumber order by Wm.LotNumber asc";
 
                 }
-                else if (strsts == "Factory Purchase" && w !="" )
+                else if (strsts == "Factory Purchase" && w != "")
                 {
                     //srt = "select distinct Ufp.batchNo,sum(convert(float,Uns.TotalWeight))as fctPlantWt,Uns.LotWiseBatch from Purchase Pc join UnloadFinalProcess Ufp on Ufp.saudaNumber = Pc.SaudaNumberCode " +
                     //    "join UnloadNetSampling Uns on Uns.LotWiseBatch = Ufp.BatchWiseLotNo where Ufp.batchNo='" + strbatchno + "' and Uns.LotWiseBatch like '%" + w + "%' group by Ufp.batchNo,Uns.LotWiseBatch";
@@ -322,11 +322,11 @@ namespace AQUA
                         "join UnloadNetSampling Uns on Uns.LotWiseBatch = Ufp.BatchWiseLotNo where Ufp.batchNo='" + strbatchno + "' and Uns.LotWiseBatch like '%" + w + "%' group by Ufp.batchNo,Uns.TotalWeight,Uns.LotWiseBatch";
 
                 }
-                else if ( strsts == "Pond Purchase" && w !="" )
+                else if (strsts == "Pond Purchase" && w != "")
                 {
                     srt = "select distinct Ufp.batchNo,Uns.TotalWeight as fctPlantWt,Uns.LotWiseBatch from Purchase Pc join UnloadFinalProcess Ufp on Ufp.saudaNumber = Pc.SaudaNumberCode " +
                         "join UnloadNetSampling Uns on Uns.LotWiseBatch = Ufp.BatchWiseLotNo where Ufp.batchNo='" + strbatchno + "' and Uns.LotWiseBatch like '%" + w + "%' group by Ufp.batchNo,Uns.LotWiseBatch,Uns.TotalWeight";
-                    
+
                 }
                 dtsd = base.ODataServer.GetDataTable(srt);
             }
@@ -343,12 +343,12 @@ namespace AQUA
             return dtsd;
         }
 
-        public DataTable BRGetCnt(string strbatchno, string strpurtype,string stats)
+        public DataTable BRGetCnt(string strbatchno, string strpurtype, string stats)
         {
             DataTable dtss = new DataTable();
             string strt = "";
             try
-            {                
+            {
                 if (strpurtype == "Factory Purchase")
                 {
                     if (stats == "PC")
@@ -364,14 +364,14 @@ namespace AQUA
                         strt = "Select distinct UNS.PlantCount as cnt, UFP.batchNo , UFP.purchaseType ,UNS.LotWiseBatch from Purchase Ps join UnloadFinalProcess UFP on Ps.SaudaNumberCode = UFP.saudaNumber " +
                         "JOIN  UnloadNetSampling UNS on UNS.LotWiseBatch = UFP.BatchWiseLotNo where batchNo='" + strbatchno + "' group by UNS.PlantCount , UFP.batchNo , UFP.purchaseType,UNS.LotWiseBatch order by UNS.LotWiseBatch asc";
                     }
-                    
+
                 }
-                else if (strpurtype == "Pond Purchase" )
+                else if (strpurtype == "Pond Purchase")
                 {
                     //strt = "Select distinct rmpwws.PurchaseCountPerKG as cnt, UFP.batchNo , Ps.purchaseType from Purchase Ps join UnloadFinalProcess UFP on Ps.SaudaNumberCode = UFP.saudaNumber join " +
                     //    "RMPWeighmentNetSampling rmpwws on rmpwws.SaudaNumberCode=Ps.SaudaNumberCode where batchNo='" + strbatchno + "' and Ps.purchaseType ='" + strpurtype + "' " +
                     //    "group by rmpwws.PurchaseCountPerKG , UFP.batchNo , Ps.purchaseType";
-                    if(stats == "PC")
+                    if (stats == "PC")
                     {
                         //strt = "Select distinct UNS.PlantCount as cnt, UFP.batchNo , UFP.purchaseType from Purchase Ps join UnloadFinalProcess UFP on Ps.SaudaNumberCode = UFP.saudaNumber " +
                         //"JOIN  UnloadNetSampling UNS on UNS.LotWiseBatch = UFP.BatchWiseLotNo where batchNo='" + strbatchno + "' group by UNS.PlantCount , UFP.batchNo , UFP.purchaseType";
@@ -384,9 +384,9 @@ namespace AQUA
                             "= UFP.saudaNumber join RMPWeighmentNetSampling rmpwws on rmpwws.SaudaNumberCode=Ps.SaudaNumberCode where batchNo='" + strbatchno + "' and Ps.purchaseType ='" + strpurtype + "' " +
                             "group by rmpwws.PurchaseCountPerKG , UFP.batchNo , Ps.purchaseType,rmpwws.LotNumber order by rmpwws.LotNumber asc";
                     }
-                    
+
                 }
-                 dtss = base.ODataServer.GetDataTable(strt);
+                dtss = base.ODataServer.GetDataTable(strt);
             }
             catch (Exception ex)
             {
@@ -400,7 +400,7 @@ namespace AQUA
             }
             return dtss;
         }
-        
+
         public DataTable BRGetGrader(string strbatchno)
         {
             DataTable dtq = new DataTable();
@@ -418,13 +418,13 @@ namespace AQUA
         }
 
 
-        public DataTable BRGetBtcDtls(string strBatchno , string stats)
+        public DataTable BRGetBtcDtls(string strBatchno, string stats)
         {
             DataTable dt = new DataTable();
             string strqryy = "";
             try
             {
-                if(stats == "Factory Purchase")
+                if (stats == "Factory Purchase")
                 {
                     strqryy = "select distinct UFP.batchNo,PUC.PurchaseDate,PUC.PurchaseType,PUC.SupplierName,PUC.Mandal,PUC.Village,PUC.District from Purchase PUC join UnloadFinalProcess UFP " +
                     "on UFP.saudaNumber = PUC.SaudaNumberCode join BeheadingFinalData BFD on BFD.batchNumber = UFP.batchNo  where UFP.batchNo='" + strBatchno + "'  Group BY UFP.batchNo,PUC.PurchaseDate," +
@@ -525,14 +525,18 @@ namespace AQUA
             return dtg;
         }
 
-        public DataTable SuplierDetails(string strFromDate, string strTodate, string strBatchNo, string strPurchaseType)
+        public DataTable SuplierDetails(string strFromDate, string strTodate, string strBatchNo) //, string strPurchaseType)
         {
             DataTable dt = new DataTable();
             try
             {
+                //string strqry = "SELECT GSP.batchNo,BFD.supplierName, BFD.headOnCountPerKg as Headoncnt, BFD.sampleBeheadingYieldPercentage as smplbeheadper FROM GradingScanningProcess" +
+                //            " GSP JOIN GradingProcess GP ON GSP.batchNo = GP.batchNumber JOIN BeheadingFinalData BFD ON BFD.batchNumber = GP.batchNumber WHERE" +
+                //            " CONVERT(VARCHAR, GP.gradingDateTime, 23) BETWEEN '" + strFromDate + "' AND '" + strTodate + "' AND BFD.Purchasetype = '" + strPurchaseType + "' AND GSP.batchNo = '" + strBatchNo + "'" + //--and BFD.batchNumber = 'STV752' and BFD.BatchLotNumber like '%W1%'"
+                //            "GROUP BY GSP.batchNo,BFD.supplierName,BFD.headOnCountPerKg,BFD.sampleBeheadingYieldPercentage";
                 string strqry = "SELECT GSP.batchNo,BFD.supplierName, BFD.headOnCountPerKg as Headoncnt, BFD.sampleBeheadingYieldPercentage as smplbeheadper FROM GradingScanningProcess" +
                             " GSP JOIN GradingProcess GP ON GSP.batchNo = GP.batchNumber JOIN BeheadingFinalData BFD ON BFD.batchNumber = GP.batchNumber WHERE" +
-                            " CONVERT(VARCHAR, GP.gradingDateTime, 23) BETWEEN '" + strFromDate + "' AND '" + strTodate + "' AND BFD.Purchasetype = '" + strPurchaseType + "' AND GSP.batchNo = '" + strBatchNo + "'" + //--and BFD.batchNumber = 'STV752' and BFD.BatchLotNumber like '%W1%'"
+                            " CONVERT(VARCHAR, GP.gradingDateTime, 23) BETWEEN '" + strFromDate + "' AND '" + strTodate + "'  AND GSP.batchNo = '" + strBatchNo + "'" + //--and BFD.batchNumber = 'STV752' and BFD.BatchLotNumber like '%W1%'"
                             "GROUP BY GSP.batchNo,BFD.supplierName,BFD.headOnCountPerKg,BFD.sampleBeheadingYieldPercentage";
                 dt = base.ODataServer.GetDataTable(strqry);
             }
@@ -556,7 +560,7 @@ namespace AQUA
             {
                 strQry = "SELECT GSP.batchNo, GSP.grade,Gsp.productType FROM GradingScanningProcess GSP " +
                        " JOIN GradingProcess GP ON GSP.batchNo = GP.batchNumber JOIN BeheadingFinalData BFD ON BFD.batchNumber = GP.batchNumber WHERE " +
-                       " CONVERT(VARCHAR, GP.gradingDateTime, 23) BETWEEN '" + strFromDate + "' AND '" + strTodate + "' AND BFD.Purchasetype = '" + strPurchaseType + "' " +
+                       " CONVERT(VARCHAR, GP.gradingDateTime, 23) BETWEEN '" + strFromDate + "' AND '" + strTodate + "' AND BFD.Purchasetype IN  " + strPurchaseType + " " +
                        " AND GSP.batchNo = '" + strBatchNo + "' GROUP BY GSP.batchNo, GSP.grade,GSP.productType";
                 dtBind = base.ODataServer.GetDataTable(strQry);
             }
@@ -740,7 +744,7 @@ namespace AQUA
                 string sqry = "select Distinct BatchNumber from iqfbarcodeprinting where labelstatus='Scanned' and BatchNumber like '" + strFBNo + "%'";
                 dt = base.ODataServer.GetDataTable(sqry);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -762,7 +766,7 @@ namespace AQUA
                     "FROM IQFBarcodePrinting WHERE BatchNumber='" + strBatchno + "' and LabelStatus='Scanned'";
                 dts = base.ODataServer.GetDataTable(Qry);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -775,7 +779,7 @@ namespace AQUA
             return dts;
         }
 
-        public DataTable GetIQFscanedData(string strBatchno,string strLblSts,string strPrdType)
+        public DataTable GetIQFscanedData(string strBatchno, string strLblSts, string strPrdType)
         {
             DataTable dts = new DataTable();
             try
@@ -784,7 +788,7 @@ namespace AQUA
                     "WHERE BatchNumber='" + strBatchno + "' and Variety = '" + strPrdType + "'  and LabelStatus='" + strLblSts + "'";
                 dts = base.ODataServer.GetDataTable(Qry);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 StringBuilder err = new StringBuilder();
                 err.Append(" Message : " + ex.Message);
@@ -796,7 +800,7 @@ namespace AQUA
             }
             return dts;
         }
-        
+
 
         public DataTable ChkSoakingFD(string strSoakingTankID)
         {
@@ -806,50 +810,110 @@ namespace AQUA
                 string Qry = "SELECT batchNo, chemicalStatus ,soakingTankBarcodeId,barcodeIdsOfCrate FROM SoakingFinalData WHERE soakingTankBarcodeId='" + strSoakingTankID + "' OR barcodeIdsOfCrate='" + strSoakingTankID + "'";
                 dty = base.ODataServer.GetDataTable(Qry);
             }
-            catch
+            catch (Exception ex)
             {
-
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                dty = null;
             }
             return dty;
         }
 
 
-        
 
-        public DataTable GetProdTypes(string strBatchNo,string strLblsts)
+
+        public DataTable GetProdTypes(string strBatchNo, string strLblsts)
         {
             DataTable dt = new DataTable();
-            string QRY = "SELECT DISTINCT IQFBP.Variety AS ProductType FROM IQFBarcodePrinting IQFBP join SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
+            try
+            {
+                string QRY = "SELECT DISTINCT IQFBP.Variety AS ProductType FROM IQFBarcodePrinting IQFBP join SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
                             "WHERE BatchNumber='" + strBatchNo + "' AND IQFBP.Variety IS NOT NULL AND IQFBP.Variety <> '' AND LabelStatus='" + strLblsts + "'";
-            dt = base.ODataServer.GetDataTable(QRY);
+                dt = base.ODataServer.GetDataTable(QRY);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                dt = null;
+            }
+
+
             return dt;
         }
 
         public DataTable GetChemSts(string strBatchNo, string strLblsts)
         {
             DataTable dt = new DataTable();
-            string QRY = "SELECT DISTINCT SKFD.chemicalStatus AS ChemicalSts FROM IQFBarcodePrinting IQFBP JOIN SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
+            try
+            {
+                string QRY = "SELECT DISTINCT SKFD.chemicalStatus AS ChemicalSts FROM IQFBarcodePrinting IQFBP JOIN SoakingFinalData SKFD  ON SKFD.batchNo = IQFBP.BatchNumber " +
                             "WHERE BatchNumber='" + strBatchNo + "' AND SKFD.chemicalStatus IS NOT NULL AND SKFD.chemicalStatus <> '' AND LabelStatus='" + strLblsts + "' ORDER BY chemicalStatus DESC;";
-            dt = base.ODataServer.GetDataTable(QRY);
+                dt = base.ODataServer.GetDataTable(QRY);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                dt = null;
+            }
+
             return dt;
         }
 
-        public DataTable GetNoOfSlabPacked(string strBatchno,string strPrdTyp,string strGrade,string strActPacstyl)
+        public DataTable GetNoOfSlabPacked(string strBatchno, string strPrdTyp, string strGrade, string strActPacstyl)
         {
             DataTable dth = new DataTable();
+            try
+            {
+                string Qrys = "SELECT SUM(CAST(NoofSlabCotton AS FLOAT)) AS PackedSlabCnt FROM IQFBarcodePrinting  WHERE BatchNumber='" + strBatchno + "' AND LabelStatus='Scanned' AND" +
+                                            " Variety ='" + strPrdTyp + "' AND Grade='" + strGrade + "'  AND Actpackingstyle='" + strActPacstyl + "'";
+                dth = base.ODataServer.GetDataTable(Qrys);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                dth = null;
+            }
 
-            string Qrys = "SELECT COUNT(*) AS PackedSlabCnt FROM IQFBarcodePrinting  WHERE BatchNumber='" + strBatchno + "' AND LabelStatus='Scanned' AND" +
-                            " Variety ='" + strPrdTyp + "' AND Grade='" + strGrade + "'  AND Actpackingstyle='" + strActPacstyl + "'";
-            dth = base.ODataServer.GetDataTable(Qrys);
             return dth;
         }
 
-        public DataTable GetCountdtls(decimal strcnt,string pdtype,string strChmSts)
+        public DataTable GetCountdtls(decimal strcnt, string pdtype, string strChmSts)
         {
             DataTable dtc;
-
-            string Qery = "SELECT " + pdtype + "  FROM PackingYieldMaster WHERE HeadOnCount = " + strcnt + " AND ChemicalStatus='" + strChmSts + "'";
-            dtc = base.ODataServer.GetDataTable(Qery);
+            try
+            {
+                string Qery = "SELECT " + pdtype + "  FROM PackingYieldMaster WHERE HeadOnCount = " + strcnt + " AND ChemicalStatus='" + strChmSts + "'";
+                dtc = base.ODataServer.GetDataTable(Qery);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                dtc = null;
+            }
 
             return dtc;
 

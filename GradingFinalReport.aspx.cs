@@ -11,10 +11,12 @@ namespace AQUA
     {
         CommonManagement cMgt = new CommonManagement();
         ReportManagement rMgt = new ReportManagement();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-            scriptManager.RegisterPostBackControl(this.btnexpexcel);           
+            scriptManager.RegisterPostBackControl(this.btnexpexcel);
 
             if (Session["UserName"] == null)
             {
@@ -39,15 +41,18 @@ namespace AQUA
             ddlPurchaseType.DataValueField = "ValueField";
             ddlPurchaseType.DataBind();
             ddlPurchaseType.Items.Insert(0, "-Select-");
+            ddlPurchaseType.Items.Insert(1, "SelectAll");
 
         }
+
+        public static string PurchaseTypes = "";
         protected void btnView_Click(object sender, EventArgs e)
         {
             //ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "loader", "<script type='text/javascript'>loader();</script>", true);
             if (ScriptManager.GetCurrent(this) != null)
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "MyScript", "loader()", true);
-                
+
 
             }
 
@@ -60,31 +65,32 @@ namespace AQUA
                 {
                     ddlBatchNumber_SelectedIndexChanged(sender, e);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }
                 batcno = ddlBatchNumber.SelectedItem.Text;
                 if (batcno != "")
-                {                    
-                        DataTable dt = rMgt.BindGridView(txtFromDate.Text, txtToDate.Text, batcno.ToString(), ddlPurchaseType.SelectedItem.Text);
-                        Rcnt = dt.Rows.Count;
-                        if (Rcnt > 0)
-                        {
-                            combinedDt = dt.Clone();
-                        }
-                        combinedDt.Merge(dt);
+                {
+                    //DataTable dt = rMgt.BindGridView(txtFromDate.Text, txtToDate.Text, batcno.ToString(), ddlPurchaseType.SelectedItem.Text);
+                    DataTable dt = rMgt.BindGridView(txtFromDate.Text, txtToDate.Text, batcno.ToString(), PurchaseTypes);
+                    Rcnt = dt.Rows.Count;
+                    if (Rcnt > 0)
+                    {
+                        combinedDt = dt.Clone();
+                    }
+                    combinedDt.Merge(dt);
 
-                    combinedDt.Columns.Add("sampleHeadlessWeight", typeof(decimal)).DefaultValue=0.00;
+                    combinedDt.Columns.Add("sampleHeadlessWeight", typeof(decimal)).DefaultValue = 0.00;
                     int i = 0;
                     foreach (DataRow row in combinedDt.Rows)
                     {
-                        
+
                         var srtgrade = combinedDt.Rows[i]["grade"];
                         var srtpdtyp = combinedDt.Rows[i]["productType"];
 
-                        DataTable dtt1 = rMgt.SDGetHLQTY(batcno.ToString(), srtgrade.ToString(),srtpdtyp.ToString());
-                        if(dtt1.Rows.Count > 0)
+                        DataTable dtt1 = rMgt.SDGetHLQTY(batcno.ToString(), srtgrade.ToString(), srtpdtyp.ToString());
+                        if (dtt1.Rows.Count > 0)
                         {
                             decimal vlu = Convert.ToDecimal(dtt1.Rows[0]["grdwiseHlqty"]);
                             row["sampleHeadlessWeight"] = vlu;
@@ -110,7 +116,7 @@ namespace AQUA
                     {
                         decimal headlessWeight = Convert.ToDecimal(row["sampleHeadlessWeight"]);
                         decimal totheadlessqty = Convert.ToDecimal(txttthlqty.Text);
-                        
+
                         if (totheadlessqty != 0)
                         {
                             decimal yieldPercentage = (headlessWeight / totheadlessqty) * 100;
@@ -124,7 +130,7 @@ namespace AQUA
                         {
                             row["YieldPercentage"] = DBNull.Value;
                         }
-                        
+
                     }
                     GradingFinalData.DataSource = combinedDt;
                     GradingFinalData.DataBind();
@@ -141,18 +147,31 @@ namespace AQUA
             }
         }
 
-        
+
 
         protected void ddlPurchaseType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            DataTable dt = rMgt.BindBatchNoGrade(txtFromDate.Text, txtToDate.Text, ddlPlant.SelectedItem.Text, ddlPurchaseType.SelectedItem.Text);
+            string PurchaseType;
+
+            if (ddlPurchaseType.SelectedItem.Text == "SelectAll")//( " + strPurchaseType + ")
+            {
+                PurchaseType = "('Pond Purchase' , 'Factory Purchase')";
+            }
+            else
+            {
+                PurchaseType = "('" + ddlPurchaseType.SelectedItem.Text + "')";
+            }
+
+            PurchaseTypes = PurchaseType;
+
+            DataTable dt = rMgt.BindBatchNoGrade(txtFromDate.Text, txtToDate.Text, ddlPlant.SelectedItem.Text, PurchaseType);
 
             ddlBatchNumber.DataSource = dt;
             ddlBatchNumber.DataTextField = "batchnumber";
             ddlBatchNumber.DataValueField = "batchnumber";
             ddlBatchNumber.DataBind();
             ddlBatchNumber.Items.Insert(0, "-Select-");
+
 
         }
 
@@ -174,9 +193,9 @@ namespace AQUA
             int cnt = 0;
             try
             {
-                dt1 = rMgt.SuplierDetails(txtFromDate.Text, txtToDate.Text, ddlBatchNumber.SelectedItem.Text, ddlPurchaseType.SelectedItem.Text);
+                dt1 = rMgt.SuplierDetails(txtFromDate.Text, txtToDate.Text, ddlBatchNumber.SelectedItem.Text);  //, ddlPurchaseType.SelectedItem.Text);
                 cnt1 = dt1.Rows.Count;
-                if(cnt1 > 0)
+                if (cnt1 > 0)
                 {
                     txtsupliername.Text = dt1.Rows[0]["supplierName"].ToString();
                     txtheadoncnt.Text = dt1.Rows[0]["Headoncnt"].ToString();
@@ -184,10 +203,10 @@ namespace AQUA
                     txtbeheadyield.Text = dt1.Rows[0]["smplbeheadper"].ToString();
 
                     dty = rMgt.GetHeadOnWight(ddlBatchNumber.SelectedItem.Text);
-                    if(dty.Rows.Count > 0)
+                    if (dty.Rows.Count > 0)
                     {
                         txtheadonqty.Text = dty.Rows[0]["HeadOnQty"].ToString();
-                        
+
                     }
                 }
                 else
@@ -195,9 +214,9 @@ namespace AQUA
 
                 }
 
-                dt3 = rMgt.SDGetHLQTY(ddlBatchNumber.SelectedItem.Text,"","");
+                dt3 = rMgt.SDGetHLQTY(ddlBatchNumber.SelectedItem.Text, "", "");
                 cnt3 = dt3.Rows.Count;
-                if(cnt3 > 0)
+                if (cnt3 > 0)
                 {
                     txttthlqty.Text = dt3.Rows[0]["totHlQty"].ToString();
                     decimal TOTHONQTY = Convert.ToDecimal(txtheadonqty.Text);
@@ -213,7 +232,7 @@ namespace AQUA
 
                 dt = rMgt.QualityDeatails(ddlBatchNumber.SelectedItem.Text);
                 cnt = dt.Rows.Count;
-                if(cnt > 0)
+                if (cnt > 0)
                 {
                     txtsoftper.Text = dt.Rows[0]["SoftPercentage"].ToString();
                     txtblackspotper.Text = dt.Rows[0]["PercentageOfBlackSpot"].ToString();
@@ -228,7 +247,7 @@ namespace AQUA
                 }
                 dt2 = rMgt.getBSvalue(ddlBatchNumber.SelectedItem.Text);
                 cnt2 = dt2.Rows.Count;
-                if(cnt2 > 0)
+                if (cnt2 > 0)
                 {
                     txtbsvlu.Text = dt2.Rows[0]["bsRatio"].ToString();
                 }
@@ -237,12 +256,12 @@ namespace AQUA
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
         }
-        
+
         public void exporttoexcel(string formate)
         {
             if (formate == "Excel")
@@ -278,10 +297,10 @@ namespace AQUA
                 }
             }
         }
-                
+
         protected void btnexpexcel_Click(object sender, EventArgs e)
         {
-             exporttoexcel("Excel");
+            exporttoexcel("Excel");
         }
 
         protected void btnexportWord_Click(object sender, EventArgs e)

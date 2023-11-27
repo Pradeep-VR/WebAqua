@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Web.UI;
 
 namespace AQUA
@@ -63,7 +64,8 @@ namespace AQUA
                 cnt = dt.Rows.Count;
                 if (cnt > 0)
                 {
-                    txtheadoncnt.Text = dt.Rows[0]["Headoncnt"].ToString();
+                    decimal HOC = Convert.ToDecimal(dt.Rows[0]["Headoncnt"].ToString());
+                    txtheadoncnt.Text = HOC.ToString("0.00");
 
                 }
                 else { }
@@ -72,7 +74,8 @@ namespace AQUA
                 cnt1 = dt1.Rows.Count;
                 if (cnt1 > 0)
                 {
-                    txttotrmqty.Text = dt1.Rows[0]["HeadOnQty"].ToString();
+                    decimal hocweight = Convert.ToDecimal(dt1.Rows[0]["HeadOnQty"].ToString());
+                    txttotrmqty.Text = hocweight.ToString("0.00");
 
                 }
                 else { }
@@ -100,23 +103,30 @@ namespace AQUA
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
-        public decimal CntCalculation(string Pdtype,decimal count,decimal total,string chemsts)
+        public decimal CntCalculation(string Pdtype, decimal count, decimal total, string chemsts)
         {
             decimal result = 0;
             string clname = Pdtype.ToString();
             DataTable dt = new DataTable();
-            dt = rMgt.GetCountdtls(count, Pdtype, chemsts);
-            if(dt.Rows.Count > 0)
+            try
             {
-                decimal PackingYield = Convert.ToDecimal(dt.Rows[0][clname].ToString());
-                result = total / PackingYield * 100;
+                dt = rMgt.GetCountdtls(count, Pdtype, chemsts);
+                if (dt.Rows.Count > 0)
+                {
+                    decimal PackingYield = Convert.ToDecimal(dt.Rows[0][clname].ToString());
+                    result = total / PackingYield * 100;
 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
             return result;
@@ -124,7 +134,7 @@ namespace AQUA
 
         public decimal Typeconvertion(string Type, string ActPckStyl, decimal slbCnt)
         {
-            decimal ret = 0;
+            decimal result = 0;
             decimal wghtofOneSlab = 0;
             decimal NoofSlab = 0;
             string[] vlus = ActPckStyl.Split('*');
@@ -137,19 +147,19 @@ namespace AQUA
                 string lb = "0.454";
                 decimal v = Convert.ToDecimal(lb.ToString());
 
-                ret = wghtofOneSlab * NoofSlab * v;
+                result = wghtofOneSlab * NoofSlab * v;
             }
             else if (Type == "Grms")
             {
                 string grm = "0.001";
                 decimal v = Convert.ToDecimal(grm.ToString());
-                ret = wghtofOneSlab * NoofSlab * v;
+                result = wghtofOneSlab * NoofSlab * v;
             }
             else//For Kg Type
             {
-                ret = wghtofOneSlab * NoofSlab;
+                result = wghtofOneSlab * NoofSlab;
             }
-            return ret;
+            return result;
         }
 
 
@@ -177,24 +187,26 @@ namespace AQUA
             DataTable dt2 = new DataTable();
             DataTable dtsok = new DataTable();
             DataTable dtnoslabcnt = new DataTable();
-            string PoNo = ""; string Grade = ""; string SoakingTyp = ""; string PrdTyp = ""; string Frztyp = ""; string PckStyl = ""; string WgtUnt = "";
+            string PoNo = ""; string Grade = ""; string SoakingTyp = ""; string PrdTyp = ""; string Frztyp = ""; string PckStyl = ""; string WgtUnt = ""; string BatchNo;
             string SoakingTblId = ""; string ChmSts = ""; string FreezTyp = "";
             decimal NoSlabPacked = 0; decimal QtyinKg = 0; decimal Total = 0; decimal FHOCcnv = 0;
             int cnt; int cnt1;
             try
             {
+                BatchNo = ddlBatchNumber.SelectedItem.Text;
 
-                for (int CS = 0; CS < ChmStsLst.Count; CS++)
+                for (int CS = 0; CS < ChmStsLst.Count; CS++)//chemical sts loop 
                 {
                     ChmSts = ChmStsLst[CS];
                     SoakingTyp = ChmSts.ToString();
 
-                    for (int PD = 0; PD < PrdTypLst.Count; PD++)
+                    for (int PD = 0; PD < PrdTypLst.Count; PD++)//product type loop
                     {
                         PrdTyp = PrdTypLst[PD];
                         List<decimal> totlst = new List<decimal>();
+                        Total = 0;
 
-                        dt = rMgt.GetIQFscanedData(ddlBatchNumber.SelectedItem.Text, "Scanned", PrdTyp);
+                        dt = rMgt.GetIQFscanedData(BatchNo, "Scanned", PrdTyp);//Get batch no details from iqfbarcodeprinting
                         cnt = dt.Rows.Count;
                         if (cnt > 0)
                         {
@@ -202,8 +214,9 @@ namespace AQUA
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 SoakingTblId = dt.Rows[i]["SoakingBarcode"].ToString();
+
                                 PoNo = dt.Rows[i]["POnumber"].ToString();
-                                if(PoNo == "")
+                                if (PoNo == "")
                                 {
                                     PoNo = dt.Rows[i]["SlabPacking"].ToString();
                                 }
@@ -212,16 +225,16 @@ namespace AQUA
                                 PckStyl = dt.Rows[i]["Actpackingstyle"].ToString();
                                 WgtUnt = dt.Rows[i]["WeightUnits"].ToString();
                                 FreezTyp = dt.Rows[i]["FreezingType"].ToString();
-                                
-                                dtsok = rMgt.ChkSoakingFD(SoakingTblId);
+
+                                dtsok = rMgt.ChkSoakingFD(SoakingTblId);//Get chemical sts , using soaking id or barcode id
                                 int cnt2 = dtsok.Rows.Count;
                                 if (cnt2 > 0)
                                 {
                                     if (ChmSts == dtsok.Rows[0]["chemicalStatus"].ToString())
                                     {
-                                        if(PckStyl != "")
+                                        if (PckStyl != "")
                                         {
-                                            dtnoslabcnt = rMgt.GetNoOfSlabPacked(ddlBatchNumber.SelectedItem.Text, PrdTyp, Grade, PckStyl);
+                                            dtnoslabcnt = rMgt.GetNoOfSlabPacked(BatchNo, PrdTyp, Grade, PckStyl);//Get total number of slabs packed
                                             int cnt5 = dtnoslabcnt.Rows.Count;
                                             if (cnt5 > 0)
                                             {
@@ -229,16 +242,15 @@ namespace AQUA
                                             }
                                             else { }
 
-                                            decimal rev = Typeconvertion(WgtUnt, PckStyl, NoSlabPacked);
+                                            decimal rev = Typeconvertion(WgtUnt, PckStyl, NoSlabPacked);//Kgs,Lbs,Grms are convert to kgs 
                                             QtyinKg = rev;
                                             totlst.Add(QtyinKg);
-
 
 
                                         }
                                         else
                                         {
-                                            
+
                                         }
 
                                         FinalPackingrpt.Rows.Add(PoNo, PrdTyp, Grade, SoakingTyp, FreezTyp, PckStyl, WgtUnt, NoSlabPacked, QtyinKg);
@@ -268,14 +280,12 @@ namespace AQUA
 
                         }
 
-                        
-
                         decimal HonCnt = Convert.ToDecimal(txtheadoncnt.Text);
-                        FHOCcnv = CntCalculation(PrdTyp, HonCnt, Total, ChmSts);
+                        FHOCcnv = CntCalculation(PrdTyp, HonCnt, Total, ChmSts);//final hed on count was calculated here
 
                         string vlu = FHOCcnv.ToString("0.00");
 
-                        FinalPackingrpt.Rows.Add("", "", "", "", "", "", "", "Final HOC", vlu);
+                        FinalPackingrpt.Rows.Add("", "", "", "", "", "", "", "Final to HON", vlu);
 
                     }//Pdtype Loop End Here after Nxt chml sts comes
 
@@ -285,13 +295,27 @@ namespace AQUA
                 GVPackingRpt.DataBind();
 
             }
-            catch
+            catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            Response.Clear();
+            Response.AddHeader("content-disposition", "attachment;filename = PackingReport" + DateTime.Now.ToString("yyyy-MM-dd_hhmm") + ".xls");
+            Response.ContentType = "application/vnd.xls";
+            StringWriter stringWrite = new StringWriter();
+            HtmlTextWriter htmlWrite = new HtmlTextWriter(stringWrite);
+            GVPackingRpt.RenderControl(htmlWrite);
+            Response.Write(stringWrite.ToString());
+            Response.End();
+        }
 
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+        }
 
     }
 }
