@@ -23,7 +23,7 @@
             <asp:UpdatePanel ID="upQualityEntry" runat="server">
                 <ContentTemplate>
 
-                    <h4 class="header green">Packing Module - BLOCK</h4>
+                    <h4 class="header green" style="font-weight: bold; color: brown; ">Packing Module - BLOCK</h4>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="card-body" style="border: groove">

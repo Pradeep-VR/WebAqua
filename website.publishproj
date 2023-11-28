@@ -18,7 +18,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <SchemaVersion>2.0</SchemaVersion>
     <!--<ProjectGuid>{f15276eb-77c7-47e3-979a-8ece561a87fb}</ProjectGuid>-->
     <SourceWebPhysicalPath>$(MSBuildThisFileDirectory)</SourceWebPhysicalPath>
-    <SourceWebVirtualPath>/AQUAWEB</SourceWebVirtualPath>
+    <SourceWebVirtualPath>/AQWEB</SourceWebVirtualPath>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <SourceWebProject>
     </SourceWebProject>
