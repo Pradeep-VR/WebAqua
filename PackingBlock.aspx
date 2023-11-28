@@ -1,6 +1,18 @@
   <%@ Page Title="" Language="C#" MasterPageFile="~/ITCAQUA.master" AutoEventWireup="true" CodeFile="PackingBlock.aspx.cs" Inherits="AQUA.PackingBlock" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style>
+    select {
+        height: 30px;
+        border-style: solid;
+        border-color: lightseagreen;
+        border-width: 1px;
+        border-radius: 1px;
+        margin-top:0px;padding-top:0px;
+    }
+    
+    
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
@@ -27,7 +39,7 @@
 
                                     <div class="col-md-1">
                                         <div class="mb-2 row">
-                                            <label for="fname">.</label>
+                                            <label for="fname" style="color:transparent;">.</label>
                                             <asp:Button ID="btnView" runat="server" Text="View" CssClass="form-control btn-primary"  ForeColor="White" OnClick="btnView_Click" />
                                         </div>
                                     </div>
@@ -247,41 +259,31 @@
                                             </div>
                                         </div>
                                      <div class="col-md-3">
-                                        <div class="mb-2 row" >
+                                        <div class="mb-2 row">
                                             <label for="fname">Remarks</label>
                                             <%--<asp:dropdownlist id="dropdown" runat="server" cssclass="form-control border border-success" />--%>
-                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control border border-success" TextMode="MultiLine" Height="75"/>
+                                            <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control border border-success" TextMode="MultiLine" Height="40" />
                                         </div>
                                     </div>
-                                      <div class="col-md-3 mt-4" style="padding-left:30px">
-                                        <div class="mb-5 row" >
-                               <%-- <asp:Button ID="Button1" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Label Print" ValidationGroup="id1" OnClick="btnPrint_Click" />
-                                <asp:Label ID="Label1" runat="server" Font-Size="15px" ForeColor="Green"></asp:Label>--%>
-                                             <asp:Button ID="btnPrint" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Label Print" ValidationGroup="id1" OnClick="btnPrint_Click" />
-                                             <asp:Label ID="Label1" runat="server" Font-Size="15px" ForeColor="Green"></asp:Label>
-                                            </div>
+                                    <div class="col-md-3 mt-1" style="padding-left: 35px">
+                                        <div class="mb-2 row">
+                                            <label for="fname">Select Printer</label>
+                                            <select id="selected_device" onchange="onDeviceSelected(this)"></select>
                                         </div>
-                                    <%-- <div class="col-md-3" style="padding-left:110px">
-                                        <div class="mb-5 row" >                         
-                                            <label for="fname">Selection of printer</label>                
-                                            <asp:DropDownList ID="ddlprinting" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlStorage_SelectedIndexChanged" CssClass="form-control border border-success"  />
-                                        </div>--%>
-
+    
                                     </div>
-                                  
-                                 <%--------------------TEST_PRINT_BTN---------------------%>
-                                        <div class="col-md-5 mt-6" style="padding-left:30px">
-                                            <div class="mb-5 row" >
-                                                <asp:Button ID="btntest" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Test Print" ValidationGroup="id1"  OnClick="btntest_Click" />
-                                            </div>
+                                    <div class="col-md-2 mt-1" style="padding-left: 30px;padding-top:20px">
+                                        <div class="mb-5 row">                                            
+                                            <asp:Button ID="btnPrint" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Label Print" ValidationGroup="id1" OnClick="btnPrint_Click" />
+                                            <asp:Label ID="Label1" runat="server" Font-Size="15px" ForeColor="Green"></asp:Label>
                                         </div>
-                                <div class="col-md-3 mt-4" style="padding-left:35px">
-                                       <div class="mb-5 row" >
-                                           <label for="fname">Select Printer</label>
-                                           <select id="selected_device" style="width: 200px; height: 30px;" onchange="onDeviceSelected(this)"></select>
-                                           <%--<asp:DropDownList ID="ddlPrinting" runat="server"></asp:DropDownList>--%>
-                                       </div>
-                                   </div>
+                                    </div>
+                                    <%--------------------TEST_PRINT_BTN---------------------%>
+                                    <div class="col-md-2 mt-1 " style="padding-left: 10px;padding-top:0px;margin-top:0px">
+                                        <div class="mb-6 row">
+                                            <asp:Button ID="btntest" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Test Print" ValidationGroup="id1" OnClick="btntest_Click" />
+                                        </div>
+                                    </div>
                                      <%---------------------------------------------------------%>
                                
                                     <div class="col-md-2" visible="false">
