@@ -100,6 +100,23 @@ namespace AQUA
 
         }
 
+        private void bindSoakingTankPrdTyp(string strBarcode)
+        {
+            DataTable dts;
+            try
+            {
+                dts = pMgt.GetSoakingTankPrdTyp(strBarcode);
+                if(dts.Rows.Count > 0)
+                {
+                    txtsoakingtankPrdTyp.Text = dts.Rows[0]["ProductType"].ToString();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         private void bindSoakingTankGrade(string strBarcode)
         {
@@ -297,13 +314,9 @@ namespace AQUA
             try
             {
                 bindIQFData(txtBarcodeID.Text);
-
-
                 bindIQFOutData(txtBarcodeID.Text);
-
-
-
                 bindSoakingTankGrade(txtBarcodeID.Text);
+                bindSoakingTankPrdTyp(txtBarcodeID.Text);
                 //txtPackDateTime.Text = System.DateTime.Now.ToString();
                 //txtPackDateTime.Enabled = false;
                 txtBalSlab.Enabled = false;

@@ -33,7 +33,10 @@ public class IQFOutFeedManagement : AQUAObject
         return dt;
     }
 
+
     
+
+
 
     public DataTable GetOutFeedFinalDta(string Barcodeid)
     {

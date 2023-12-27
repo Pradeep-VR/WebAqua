@@ -4,6 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <style>
+        .sidebar-item{
+            color:black;
+            font-weight:bold;
+        }
+    </style>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta charset="utf-8" />
     <title>Aqua Application - Barcode</title>
@@ -84,7 +90,7 @@
             </svg>--%>
             <div style="margin-top:20%">
                 <center>
-                    <img src="assets/images/shrimp.gif" width="150px"; height="150px";/>
+                    <img src="assets/images/shrimp.gif" width="150"; height="150";/>
                 </center>
             </div>
             
@@ -184,16 +190,14 @@
                             <!-- User profile and search -->
                             <!-- -------------------------------------------------------------- -->
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href=""
+                                <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" 
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <img
-                                        src="assets/images/users/1.jpg" alt="user" class="rounded-circle"
-                                        width="31"></a>
+                                    <img  src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"/></a>
                                 <div class="dropdown-menu dropdown-menu-end user-dd animated flipInY">
                                     <span class="with-arrow"><span class="bg-primary"></span></span>
                                     <div class="d-flex no-block align-items-center p-3 bg-primary text-white mb-2">
                                         <div class="">
-                                            <img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="60">
+                                            <img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="60"/>
                                         </div>
                                         <div class="ms-2">
                                             <h4 class="mb-0">
@@ -244,7 +248,7 @@
                                     <div class="user-content hide-menu ms-2">
                                         <a href="#" class="" id="Userdd" role="button"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <h5 class="mb-0 user-name font-medium">
+                                            <h5 class="mb-0 user-name font-medium"/>
                                                 <h5 class="mb-0">
                                                     <asp:Label ID="lblLoggedIn" runat="server" />
                                                     <i
@@ -404,7 +408,7 @@
                     <!-- -------------------------------------------------------------- -->
                 </div>
                 <footer class="footer text-center">
-                   ⓒ Copyrights By Teamliftss
+                   ⓒ By Teamliftss 2023
                 </footer>
                <%-- <footer class="footer text-center">
                     All Rights Reserved by Teamliftss. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.

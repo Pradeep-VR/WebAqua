@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.Security;
-using System.Security.Principal;
-using System.Data.SqlClient;
-using System.Configuration;
+using System.Data;
 
 namespace AQUA
 {
@@ -16,7 +8,7 @@ namespace AQUA
     {
         UserManagement uMgt = new UserManagement();
         AuthenticatedUser aUser = new AuthenticatedUser();
-        int countFail = 0;
+        //int countFail = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["UserName"] = null;
@@ -35,6 +27,7 @@ namespace AQUA
                 //ValidateUsers(username1);
             }
         }
+
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             try
@@ -214,66 +207,54 @@ namespace AQUA
 
             try
             {
-                string enpass = Utils.EncryptPassword(password.ToString());
-
-                string connection = ConfigurationManager.ConnectionStrings["DBCONNECTION"].ConnectionString;
-                using (SqlConnection con = new SqlConnection(connection))
+                DataTable dt = uMgt.GetUserValid(username, password);
+                if (dt.Rows.Count > 0)
                 {
-                    string query = "select * from USERMASTER where UserName='"+ username + "' and Password='"+ enpass + "'";
-                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    lblerror.Text = "Inside Validate Method & Before check user name";
+                    aUser = uMgt.IsUserValid(username);
+                    lblerror.Text = "After Validate Method";
+                    if (aUser.ID != null)
                     {
-                        //cmd.Parameters.AddWithValue("@User", username);
-                        //cmd.Parameters.AddWithValue("@Pass", enpass);
-                        con.Open();
-                        SqlDataReader rd = cmd.ExecuteReader();
-                        if (rd.Read())
+                        lblerror.Text = "Inside if method";
+                        if (aUser.ProcessIn == "Both" || aUser.ProcessIn == "Web")
                         {
-                            lblerror.Text = "Inside Validate Method & Before check user name";
-                            aUser = uMgt.IsUserValid(username);
-                            lblerror.Text = "After Validate Method";
-                            if (aUser.ID != null)
+                            lblerror.Text = "Inside check the processIN";
+                            base.aquaSession.UserName = aUser.UserName;
+                            base.aquaSession.UserType = aUser.UserType;
+                            Session["UserName"] = aUser.UserName;
+                            Session["UserID"] = aUser.ID;
+                            Session["Email"] = aUser.Email;
+                            Session["UserType"] = aUser.UserType;
+                            Session["LabName"] = aUser.LabName;
+                            Session["Department"] = aUser.Department;
+                            Session["LoginLocation"] = aUser.LoginLocation;
+                            Session["UserGroup"] = aUser.UserType;
+
+                            Response.Redirect("Home.aspx");
+
+                            if (aUser.accActive == "Deactive")
                             {
-                                lblerror.Text = "Inside if method";
-                                if (aUser.ProcessIn == "Both" || aUser.ProcessIn == "Web")
-                                {
-                                    lblerror.Text = "Inside check the processIN";
-                                    base.aquaSession.UserName = aUser.UserName;
-                                    base.aquaSession.UserType = aUser.UserType;
-                                    Session["UserName"] = aUser.UserName;
-                                    Session["UserID"] = aUser.ID;
-                                    Session["Email"] = aUser.Email;
-                                    Session["UserType"] = aUser.UserType;
-                                    Session["LabName"] = aUser.LabName;
-                                    Session["Department"] = aUser.Department;
-                                    Session["LoginLocation"] = aUser.LoginLocation;
-                                    Session["UserGroup"] = aUser.UserType;
-
-                                    Response.Redirect("Home.aspx");
-
-                                    if (aUser.accActive == "Deactive")
-                                    {
-                                        lblerror.Text = "Your Account has been deleted!";
-                                        return;
-                                    }
-                                    else if (aUser.accActive == "Lock")
-                                    {
-                                        lblerror.Text = "Your Account has been blocked please contact admin!";
-                                        return;
-                                    }
-
-                                }
+                                lblerror.Text = "Your Account has been deleted!";
+                                return;
                             }
-                        }
-                        else
-                        {
-                            lblerror.Text = "The given user name  does not exists. Please contact Admin";
+                            else if (aUser.accActive == "Lock")
+                            {
+                                lblerror.Text = "Your Account has been blocked please contact admin!";
+                                return;
+                            }
 
-                            txtUserName.Text = "";
-                            txtPassword.Text = "";
-                            return;
                         }
                     }
                 }
+                else
+                {
+                    lblerror.Text = "The given user name  does not exists. Please contact Admin";
+
+                    txtUserName.Text = "";
+                    txtPassword.Text = "";
+                    return;
+                }
+
             }
             catch (Exception ex)
             {
@@ -286,7 +267,7 @@ namespace AQUA
             }
         }
 
-        
-        
+
+
     }
 }

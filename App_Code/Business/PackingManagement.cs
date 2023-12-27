@@ -38,6 +38,8 @@ namespace AQUA
             }
         }
 
+        
+
         public DataTable GetFrezzerNo(string strAction)
         {
             DataTable dt = new DataTable();
@@ -192,7 +194,28 @@ namespace AQUA
             }
             return b;
         }
-        
+
+
+        public DataTable GetSoakingTankPrdTyp(string strBarcode) 
+        {
+            DataTable dty = new DataTable();
+            string qry;
+            try
+            {
+                qry = "select Distinct changeInProduct as ProductType from SoakingFinalData where soakingTankBarcodeId='" + strBarcode + "'";
+                dty = base.ODataServer.GetDataTable(qry);
+            }
+            catch(Exception ex)
+            {
+                var rt = dty + ex.ToString();
+                DataTable rtt = new DataTable();
+                rtt.Rows.Add(rt);
+                return rtt;
+            }
+            return dty;
+        }
+
+
         public DataTable GetIqfDtlsSCW(string strBarcode)
         {
             DataTable dts = new DataTable();

@@ -1,18 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 
 namespace AQUA
 {
 
-    public partial class PackingBlock : System.Web.UI.Page
+    public partial class PackingBlock : Page
     {
         PackingManagement pMgt = new PackingManagement();
         CommonManagement cMgt = new CommonManagement();
@@ -71,7 +65,7 @@ namespace AQUA
 
         private void bindBlockOutData(string strBarcode)
         {
-            DataTable dt = new DataTable();
+            DataTable dt;
             try
             {
                 dt = pMgt.GetBlockOutFeedDetails(strBarcode);
@@ -92,31 +86,17 @@ namespace AQUA
 
         private void bindBlockData(string strBarcode)
         {
-            DataTable dt = new DataTable();
+            DataTable dt;
             try
             {
                 dt = pMgt.GetBlockDetails(strBarcode);
                 if (dt.Rows.Count > 0)
                 {
-                    //txtMachineNumber.Text = dt.Rows[0]["MachineNo"].ToString();
-                    //txtOperationType.Text = dt.Rows[0]["Operation"].ToString();
-                    //txtGrade.Text = dt.Rows[0]["Grade"].ToString();
-                    //txtProductType.Text = dt.Rows[0]["ProductType"].ToString();
-                    //txtBatchNumber.Text = dt.Rows[0]["Batch"].ToString();
-                    //txtChemicalTreat.Text = "";
-                    //txtFlatCount.Text = dt.Rows[0]["CheckOfFlatCount"].ToString();
+                    
                     txtQuantity.Text = dt.Rows[0]["Quantity"].ToString();
                     txtBatchNo.Text = dt.Rows[0]["Batch"].ToString();
                     txtResult.Text = dt.Rows[0]["AntibioticStatus"].ToString();
 
-                    //txtMachineNumber.Enabled = false;
-                    //txtOperationType.Enabled = false;
-                    //txtGrade.Enabled = false;
-                    //txtProductType.Enabled = false;
-                    //txtBatchNumber.Enabled = false;
-                    //txtChemicalTreat.Enabled = false;
-                    //txtFlatCount.Enabled = false;
-                    //txtQuantity.Enabled = false;
                     lblMessage1.Text = "Valid Barcode.Please start Packing";
                     lblMessage1.ForeColor = System.Drawing.Color.Green;
                     divPack.Visible = true;
@@ -233,6 +213,23 @@ namespace AQUA
             }
         }
 
+        private void bindSoakingTankPrdTyp(string strBarcode)
+        {
+            DataTable dts;
+            try
+            {
+                dts = pMgt.GetSoakingTankPrdTyp(strBarcode);
+                if (dts.Rows.Count > 0)
+                {
+                    txtsoakingtankPrdTyp.Text = dts.Rows[0]["ProductType"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         protected void btnView_Click(object sender, EventArgs e)
         {
             ddlmchno.Items.Clear();
@@ -244,6 +241,9 @@ namespace AQUA
             }
             ddlmchno.Items.Insert(0, "-Select-");
             ddlmchno.SelectedIndex = 0;
+
+            bindSoakingTankPrdTyp(txtBarcodeID.Text);
+
             lblMessage1.Text = "";
         }
 
@@ -269,6 +269,8 @@ namespace AQUA
                 divPack.Visible = false;
             }
         }*/
+
+
         protected void ddlCustOrderNo_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
@@ -383,8 +385,7 @@ namespace AQUA
             }
             catch (Exception ex)
             {
-                string x = ex.Message + "Test Peint";
-
+                string x = ex.Message + "Test Print";
             }
 
         }
@@ -394,7 +395,6 @@ namespace AQUA
             string barcode = "";
             try
             {
-
                 if (txtBarcodeID.Text == "")
                 {
                     lblMessagePrint.Text = "Please enter the soaking tank Barcode";
@@ -411,7 +411,7 @@ namespace AQUA
 
                     bool b = false;
                     string LooseCotton = "";
-                    int lC = 0;
+                    //int lC = 0;
                     if (txtLooseCotton.Text == "")
                     { LooseCotton = "0"; }
                     else

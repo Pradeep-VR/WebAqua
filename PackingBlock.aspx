@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style>
     select {
-        height: 30px;
+        height: 30px;width:100px;
         border-style: solid;
         border-color: lightseagreen;
         border-width: 1px;
@@ -29,7 +29,7 @@
                             <div class="card-body" style="border: groove">
                                 <h5 class="card-title" style="font-weight: bold; color: brown">Outfeed Entry</h5>
                                 <div class="row mb-0">
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="mb-2 row">
                                             <label for="fname">Barcode ID</label>
                                             <asp:TextBox ID="txtBarcodeID" runat="server" MaxLength="10" CssClass="form-control border border-success" />
@@ -44,13 +44,14 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-2">
-                                        <div class="mb-2 row">
-                                            <label for="fname">MachineNo</label>
-                                             <asp:DropDownList ID="ddlmchno" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlmchno_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                    
+                                    <div class="col-md-1">
+                                    <div class="mb-2 row">
+                                        <label for="fname">MachineNo</label>
+                                        <asp:DropDownList Height="35px" ID="ddlmchno" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlmchno_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Total Infeed Quantity</label>
@@ -66,29 +67,30 @@
                                     </div>
                                     
                                     <div class="col-md-2">
+                                    <div class="mb-2 row">
+                                        <label for="fname">SoakingTankPrdType</label>
+                                        <asp:TextBox ID="txtsoakingtankPrdTyp" runat="server" MaxLength="7" Visible="true" Enabled="false" CssClass="form-control border border-success" />
+                                    </div>
+                                        </div>
+
+                                    <div class="col-md-1">
                                         <div class="mb-2 row">
                                             <label for="fname">Glaze %</label>
                                             <asp:TextBox ID="txtGlaze" runat="server" MaxLength="10" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-2">
+                                    <div class="col-md-1">
                                         <div class="mb-2 row">
-                                            <label for="fname">Antibiotic Status</label>
+                                            <label for="fname">Antibiotic Sts</label>
                                             <asp:TextBox ID="txtResult" runat="server" MaxLength="10" Enabled="false" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="mb-2 row">
-                                            <label for="fname"></label>
-                                            <asp:Label ID="lblMessage1" runat="server" Font-Size="15px" ForeColor="Green"></asp:Label>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
-                            <%--</div>
-                            </div>--%>
+
                         </div>
                     </div>
                     <div class="row" id="divPack" runat="server">
@@ -105,13 +107,13 @@
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Type of Slab Packing </label>
-                                            <asp:DropDownList ID="ddlSlabPack" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlSlabPack_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlSlabPack" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlSlabPack_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Customer Order No.</label>
-                                            <asp:DropDownList ID="ddlCustOrderNo" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCustOrderNo_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlCustOrderNo" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCustOrderNo_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
 
@@ -119,14 +121,14 @@
                                         <div class="mb-2 row">
                                             <label for="fname">Brand</label>
                                             <%--<asp:TextBox ID="txtBrand" runat="server" CssClass="form-control border border-success" />--%>
-                                            <asp:DropDownList ID="ddlBrand" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlBrand_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlBrand" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlBrand_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                               <label for="fname">Packing Style</label>
                                             <%--  <asp:TextBox ID="txtPackingStyle" runat="server" CssClass="form-control border border-success" />--%>
-                                            <asp:DropDownList ID="ddlPackingStyle" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPackingStyle_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlPackingStyle" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlPackingStyle_SelectedIndexChanged" CssClass="form-control border border-success" />
                                             <div class="col-xs-12 col-sm-12" id="divPS" runat="server" visible="false">
                                                 <div class="input-xxlarge input-group ">
                                                     <asp:TextBox ID="txtPackingStyle" runat="server" CssClass="form-control border border-success" onkeypress="return isNumber(event)" MaxLength="8" />
@@ -143,7 +145,7 @@
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Grade</label>
-                                            <asp:DropDownList ID="ddlGrade" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlGrade_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlGrade" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlGrade_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -157,13 +159,13 @@
                                     <div class="col-md-1">
                                         <div class="mb-2 row">
                                             <label for="fname">ProductType</label>
-                                            <asp:DropDownList ID="ddlVariety" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlVariety_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlVariety" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlVariety_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                      <div class="col-md-1">
                                         <div class="mb-2 row">
                                             <label for="fname">GlazaSpec</label>
-                                            <asp:DropDownList ID="ddlGlazeSpec" runat="server" AutoPostBack="true" EnableViewState="true" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlGlazeSpec" Height="35px" runat="server" AutoPostBack="true" EnableViewState="true" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -187,7 +189,7 @@
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Storage Type</label>
-                                            <asp:DropDownList ID="ddlStorage" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlStorage_SelectedIndexChanged" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlStorage" Height="35px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlStorage_SelectedIndexChanged" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -233,14 +235,14 @@
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Next Process</label>
-                                            <asp:DropDownList AutoPostBack="true" OnSelectedIndexChanged="ddlNextProcess_SelectedIndexChanged" ID="ddlNextProcess" runat="server" CssClass="form-control border border-success" />
+                                            <asp:DropDownList AutoPostBack="true" Height="35px" OnSelectedIndexChanged="ddlNextProcess_SelectedIndexChanged" ID="ddlNextProcess" runat="server" CssClass="form-control border border-success" />
                                         </div>
                                     </div>   
                                     
                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">WeightUnits</label>
-                                            <asp:DropDownList ID="ddlweightunits"  runat="server" CssClass="form-control border border-success" />
+                                            <asp:DropDownList ID="ddlweightunits" Height="35px" runat="server" CssClass="form-control border border-success" />
                                         </div>
                                     </div>
 
@@ -258,14 +260,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                     <div class="col-md-3">
+                                     <div class="col-md-2">
                                         <div class="mb-2 row">
                                             <label for="fname">Remarks</label>
                                             <%--<asp:dropdownlist id="dropdown" runat="server" cssclass="form-control border border-success" />--%>
                                             <asp:TextBox ID="txtremarks" runat="server" CssClass="form-control border border-success" TextMode="MultiLine" Height="40" />
                                         </div>
                                     </div>
-                                    <div class="col-md-3 mt-1" style="padding-left: 35px">
+                                    <div class="col-md-2 mt-1" style="padding-left: 35px">
                                         <div class="mb-2 row">
                                             <label for="fname">Select Printer</label>
                                             <select id="selected_device" onchange="onDeviceSelected(this)"></select>
@@ -279,8 +281,8 @@
                                         </div>
                                     </div>
                                     <%--------------------TEST_PRINT_BTN---------------------%>
-                                    <div class="col-md-2 mt-1 " style="padding-left: 10px;padding-top:0px;margin-top:0px">
-                                        <div class="mb-6 row">
+                                    <div class="col-md-1 mt-1 " style="padding-left: 10px;padding-top:20px; padding-right:0px;">
+                                        <div class="mb-5 row">
                                             <asp:Button ID="btntest" runat="server" CssClass="form-control btn-primary" Width="125px" ForeColor="White" Text="Test Print" ValidationGroup="id1" OnClick="btntest_Click" />
                                         </div>
                                     </div>
@@ -297,7 +299,16 @@
                                             <label for="fname">Loose slab </label>
                                             <asp:TextBox ID="txtLooseCotton" runat="server" CssClass="form-control border border-success" />
                                         </div>
-                                    </div>                                    
+                                    </div> 
+                                    
+                                    <div class="col-md-3">
+                                        <div class="mb-2 row">
+                                            <label for="fname"></label>
+                                            <asp:Label ID="lblMessage1" runat="server" Font-Size="15px" ForeColor="Green"></asp:Label>
+                                        </div>
+                                    </div>
+
+
                                     </div>
                                 </div>
                             </div>                            

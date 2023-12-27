@@ -10,6 +10,7 @@ namespace AQUA
         CommonManagement cMgt = new CommonManagement();
         PackingManagement pMgt = new PackingManagement();
         IQFOutFeedManagement oMgt = new IQFOutFeedManagement();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserName"] == null)
@@ -19,7 +20,7 @@ namespace AQUA
             if (!IsPostBack)
             {
                 BindDropDown();
-                txtUnloadingTime.Text = System.DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm");
+                txtUnloadingTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:ss:mm");
                 txtUnloadingTime.Enabled = false;
                 txtNoOfSlabsLoaded.Enabled = false;
                 txtBatchNumber.Enabled = false;
@@ -51,7 +52,7 @@ namespace AQUA
                 ddlGrade.DataBind();
                 ddlGrade.Items.Insert(0, "-Select-");
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { throw ex; }
         }
 
 
@@ -70,7 +71,7 @@ namespace AQUA
                 bindGrid();
             }
             catch (Exception ex)
-            { }
+            { throw ex; }
         }
 
         protected void ddlGrade_SelectedIndexChanged(object sender, EventArgs e)
@@ -108,7 +109,7 @@ namespace AQUA
                 }
             }
             catch (Exception ex)
-            { }
+            { throw ex; }
 
         }
 
@@ -149,7 +150,7 @@ namespace AQUA
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -174,7 +175,7 @@ namespace AQUA
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
         private void clear()
@@ -214,7 +215,7 @@ namespace AQUA
                 }
                 catch (Exception ex)
                 {
-
+                    throw ex;
                 }
             }
             gvPackSpecDetails.DataSource = null;

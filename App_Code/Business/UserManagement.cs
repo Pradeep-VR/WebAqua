@@ -155,7 +155,28 @@ namespace AQUA
             return dt;
         }
 
+        public DataTable GetUserValid(string userName,string Password)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string enpass = Utils.EncryptPassword(Password.ToString());
 
+                string query = "select * from USERMASTER where UserName='" + userName + "' and Password='" + enpass + "'";
+                dt = base.ODataServer.GetDataTable(query);
+            }
+            catch (Exception ex)
+            {
+                StringBuilder err = new StringBuilder();
+                err.Append(" Message : " + ex.Message);
+                err.AppendLine(" STACK TRACE : " + ex.StackTrace);
+                err.AppendLine(" INNER EXCEPTION : " + ex.InnerException);
+                err.AppendLine(" SOURCE : " + ex.Source);
+                Utils.LogError(err.ToString(), Utils.LogEntry.EXCEPTION);
+                return dt = null;
+            }
+            return dt;
+        }
 
         public Users GetUserDetail(string userID)
         {
